@@ -30,6 +30,12 @@ async function run(){
             const options = await courses.find(query).limit(6).toArray();
             res.send(options);
         })
+        app.get("/course/:id", async (req, res) =>{
+            const id = req.params.id;
+            const query = {_id: new ObjectId(id)};
+            const options = await courses.findOne(query);
+            res.send(options);
+        })
 
         // Instructors
         app.get("/instructors", async (req, res) =>{
@@ -49,7 +55,6 @@ async function run(){
             const query = {_id: new ObjectId(id)}
             const options = await instructors.findOne(query)
             res.send(options)
-
         })
     } finally{
         // await client.close();
