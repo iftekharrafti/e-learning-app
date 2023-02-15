@@ -17,6 +17,7 @@ async function run(){
         const database = client.db("eLearningApp")
         const courses = database.collection("courses");
         const instructors = database.collection("instructors");
+        const users = database.collection("users");
 
         // Courses
         app.get("/courses", async (req, res) =>{
@@ -55,6 +56,14 @@ async function run(){
             const query = {_id: new ObjectId(id)}
             const options = await instructors.findOne(query)
             res.send(options)
+        })
+
+        // User post
+        app.post("/users", async (req, res) => {
+            console.log(req.body);
+            const user = req.body;
+            const result = await users.insertOne(user);
+            res.send(result)
         })
     } finally{
         // await client.close();
