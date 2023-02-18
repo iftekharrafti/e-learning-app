@@ -58,6 +58,21 @@ async function run(){
             res.send(options)
         })
 
+        // All user get
+        app.get('/users', async(req, res) => {
+            const query = {};
+            const options = await users.find(query).toArray();
+            res.send(options);
+        })
+
+        // single user get
+        app.get("/users/:email", async(req, res) => {
+            const email = req.params.email;
+            const query = {email}
+            const user = await users.findOne(query);
+            res.send(user)
+        })
+
         // User post
         app.post("/users", async (req, res) => {
             console.log(req.body);
