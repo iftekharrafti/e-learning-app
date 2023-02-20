@@ -113,6 +113,24 @@ async function run() {
       const result = await notices.find(query).toArray();
       res.send(result);
     })
+
+    app.get('/notices/recentNotice', async (req, res) => {
+      const result = await notices.find().sort({date: -1}).limit(3).toArray(function(err,docs){
+        if(err) throw err
+
+        return docs
+      })
+      res.send(result)
+    })
+
+
+    // Notice get by id
+    app.get('/notices/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await notices.findOne(query);
+      res.send(result);
+    })
   } finally {
     // await client.close();
   }
