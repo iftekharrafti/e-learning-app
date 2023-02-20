@@ -65,6 +65,7 @@ async function run() {
       const options = await instructors.find(query).limit(4).toArray();
       res.send(options);
     });
+
     // Instructor Details
     app.get("/instructor/:id", async (req, res) => {
       const id = req.params.id;
@@ -72,6 +73,13 @@ async function run() {
       const options = await instructors.findOne(query);
       res.send(options);
     });
+
+    // Instructor add
+    app.post("/instructors", async(req, res) => {
+      const instructor = req.body;
+      const result = await instructors.insertOne(instructor);
+      res.send(result);
+    })
 
     // All user get
     app.get("/users", async (req, res) => {
