@@ -22,6 +22,7 @@ async function run() {
     const courses = database.collection("courses");
     const instructors = database.collection("instructors");
     const users = database.collection("users");
+    const notices = database.collection("notices");
 
     // Courses
     app.get("/courses", async (req, res) => {
@@ -105,6 +106,13 @@ async function run() {
       const result = await users.updateOne(filter, updatedDoc, options);
       res.send(result);
     });
+
+    // Notices
+    app.get('/notices', async (req, res) => {
+      const query = {}
+      const result = await notices.find(query).toArray();
+      res.send(result);
+    })
   } finally {
     // await client.close();
   }
