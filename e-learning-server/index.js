@@ -36,12 +36,22 @@ async function run() {
       const options = await courses.find(query).limit(6).toArray();
       res.send(options);
     });
+
+    // Single course get
     app.get("/course/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const options = await courses.findOne(query);
       res.send(options);
     });
+
+    // Course post
+    app.post('/courses', async (req, res) =>{
+      const course = req.body;
+      console.log(course)
+      const result = await courses.insertOne(course);
+      res.send(result);
+    })
 
     // Instructors
     app.get("/instructors", async (req, res) => {
